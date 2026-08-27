@@ -3,7 +3,7 @@
 object Versions {
     const val MAJOR = 0
     const val MINOR = 1
-    const val PATCH = 3
+    const val PATCH = 4
     val VERSION_NAME = "$MAJOR.$MINOR.$PATCH"
     val VERSION_CODE = (MAJOR * 10000) + (MINOR * 100) + PATCH
 }
@@ -45,12 +45,6 @@ android {
 
     buildTypes {
         release {
-            // R8 shrinking/obfuscation on: Gson 2.11 consumer rules + @SerializedName on all
-            // persisted models keep reflection working; verify with a release-build smoke test.
-            optimization {
-                enable = true
-            }
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
