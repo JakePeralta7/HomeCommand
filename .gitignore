@@ -1,0 +1,21 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ / Android Studio
+.idea/
+
+# Android Studio captures & native builds
+/captures
+.externalNativeBuild
+.cxx
+
+# Kotlin
+.kotlin/
+
+# Local machine-specific config (contains SDK path)
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,22 @@
+complexity:
+  LongMethod:
+    active: true
+    allowedLines: 120
+  TooManyFunctions:
+    active: true
+    allowedFunctionsPerFile: 15
+    # RecyclerView ViewModels/holders legitimately need many small per-type binder methods
+    allowedFunctionsPerClass: 25
+    allowedFunctionsPerInterface: 15
+    allowedFunctionsPerObject: 15
+
+style:
+  MagicNumber:
+    # UI code carries many protocol/bounds literals; revisit if a constants pass lands
+    active: false
+  MaxLineLength:
+    maxLineLength: 140
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: false

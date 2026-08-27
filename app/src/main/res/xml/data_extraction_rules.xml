@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Data extraction rules for cloud backup and device transfer (API 31+).
+   The MQTT credentials file is excluded: see backup_rules.xml.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="my_automations.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="my_automations.xml" />
+    </device-transfer>
+</data-extraction-rules>

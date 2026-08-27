@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/drawer_rooms"
+        android:icon="@drawable/ic_rooms"
+        android:title="@string/tab_rooms" />
+    <item
+        android:id="@+id/drawer_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/tab_settings" />
+    <item
+        android:id="@+id/drawer_logs"
+        android:icon="@drawable/ic_logs"
+        android:title="@string/drawer_logs" />
+</menu>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Full-data backup rules (legacy format, devices older than API 31).
+   The MQTT credentials file is excluded: the KeyStore key that protects the
+   password does not travel with backups, so restoring it elsewhere is useless
+   and keeping it around invites confusion.
+-->
+<full-backup-content>
+    <exclude domain="sharedpref" path="my_automations.xml" />
+</full-backup-content>

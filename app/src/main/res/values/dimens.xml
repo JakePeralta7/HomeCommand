@@ -1,0 +1,6 @@
+<resources>
+    <!-- Shared card chrome for the five tile layouts; keep tile geometry uniform. -->
+    <dimen name="tile_card_margin">6dp</dimen>
+    <dimen name="tile_card_corner_radius">16dp</dimen>
+    <dimen name="tile_card_padding">14dp</dimen>
+</resources>

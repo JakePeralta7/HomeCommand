@@ -1,0 +1,17 @@
+<resources>
+    <style name="Theme.HomeCommand" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Kept in lockstep with values/themes.xml: BreadcrumbBarView and the sub-screen
+             shared-axis motion resolve these at runtime, including in dark mode. -->
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="touchSelectBackground">?android:attr/selectableItemBackground</item>
+    </style>
+</resources>
