@@ -121,7 +121,8 @@
     <string name="device_info_command_topic">Command topic</string>
     <string name="device_info_read_only">Read-only</string>
     <string name="device_info_notify">Notify on change</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="none">None</string>
-</resources>
+     <string name="yes">Yes</string>
+     <string name="no">No</string>
+     <string name="none">None</string>
+     <string name="drawer_version">Version %1$s</string>
+ </resources>

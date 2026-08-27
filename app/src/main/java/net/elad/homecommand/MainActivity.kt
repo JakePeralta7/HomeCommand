@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -68,6 +69,13 @@ class MainActivity : AppCompatActivity() {
         showCrumb(R.string.tab_rooms)
 
         val navDrawer = findViewById<NavigationView>(R.id.nav_drawer)
+
+        // Add drawer header with app name and version
+        val headerView = layoutInflater.inflate(R.layout.drawer_header, navDrawer, false)
+        val versionText = headerView.findViewById<TextView>(R.id.drawer_app_version)
+        versionText.text = getString(R.string.drawer_version, BuildConfig.VERSION_NAME)
+        navDrawer.addHeaderView(headerView)
+
         navDrawer.setCheckedItem(R.id.drawer_rooms)
         navDrawer.setNavigationItemSelectedListener { item ->
             drawerLayout.closeDrawer(GravityCompat.START)

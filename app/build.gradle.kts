@@ -1,3 +1,13 @@
+// Semantic versioning: update these values for releases
+// major.minor.patch - increment patch for bug fixes, minor for features, major for breaking changes
+object Versions {
+    const val MAJOR = 0
+    const val MINOR = 1
+    const val PATCH = 0
+    val VERSION_NAME = "$MAJOR.$MINOR.$PATCH"
+    val VERSION_CODE = (MAJOR * 10000) + (MINOR * 100) + PATCH
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.spotless)
@@ -14,10 +24,14 @@ android {
         applicationId = "net.elad.homecommand"
         minSdk = 37
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = Versions.VERSION_CODE
+        versionName = Versions.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
