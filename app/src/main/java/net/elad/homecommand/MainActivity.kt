@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var breadcrumb: BreadcrumbBarView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -75,6 +77,23 @@ class MainActivity : AppCompatActivity() {
         val versionText = headerView.findViewById<TextView>(R.id.drawer_app_version)
         versionText.text = getString(R.string.drawer_version, BuildConfig.VERSION_NAME)
         navDrawer.addHeaderView(headerView)
+
+        // Apply inset padding to drawer header for proper positioning
+        val headerPaddingLeft = headerView.paddingLeft
+        val headerPaddingRight = headerView.paddingRight
+        val headerPaddingTop = headerView.paddingTop
+        val headerPaddingBottom = headerView.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(headerView) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            headerView.updatePadding(
+                left = headerPaddingLeft + maxOf(bars.left, cutout.left),
+                right = headerPaddingRight + maxOf(bars.right, cutout.right),
+                top = headerPaddingTop + maxOf(bars.top, cutout.top),
+                bottom = headerPaddingBottom,
+            )
+            insets
+        }
 
         navDrawer.setCheckedItem(R.id.drawer_rooms)
         navDrawer.setNavigationItemSelectedListener { item ->
@@ -127,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             root.updatePadding(top = rootTop + maxOf(bars.top, cutout.top))
-            WindowInsetsCompat.CONSUMED
+            insets
         }
     }
 

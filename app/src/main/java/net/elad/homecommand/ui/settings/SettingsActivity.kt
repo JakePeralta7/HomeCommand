@@ -3,8 +3,12 @@ package net.elad.homecommand.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -30,6 +34,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var textGeneralSummary: MaterialTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
@@ -40,6 +45,20 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<BreadcrumbBarView>(R.id.breadcrumb).setPath(
             BreadcrumbBarView.Crumb(getString(R.string.tab_settings)),
         )
+
+        // Apply dynamic bottom insets for navigation bar awareness to ScrollView content
+        val scrollContent = findViewById<LinearLayout>(R.id.scroll_content)
+        val scrollContentInitialPadding = scrollContent.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(scrollContent) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            scrollContent.setPadding(
+                scrollContent.paddingLeft,
+                scrollContent.paddingTop,
+                scrollContent.paddingRight,
+                scrollContentInitialPadding + bars.bottom
+            )
+            insets
+        }
 
         bindViews()
 

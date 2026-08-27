@@ -4,10 +4,14 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -58,6 +62,7 @@ class MqttConnectionActivity : AppCompatActivity() {
     private lateinit var textConnectionStatus: MaterialTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mqtt_connection)
         bindViews()
@@ -70,6 +75,20 @@ class MqttConnectionActivity : AppCompatActivity() {
             BreadcrumbBarView.Crumb(getString(R.string.tab_settings)) { finish() },
             BreadcrumbBarView.Crumb(getString(R.string.settings_mqtt_connection)),
         )
+
+        // Apply dynamic bottom insets for navigation bar awareness to ScrollView content
+        val scrollContent = findViewById<LinearLayout>(R.id.scroll_content)
+        val scrollContentInitialPadding = scrollContent.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(scrollContent) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            scrollContent.setPadding(
+                scrollContent.paddingLeft,
+                scrollContent.paddingTop,
+                scrollContent.paddingRight,
+                scrollContentInitialPadding + bars.bottom
+            )
+            insets
+        }
 
         // No toast here: the save is async; feedback arrives via saveOutcomes below.
         btnSave.setOnClickListener {

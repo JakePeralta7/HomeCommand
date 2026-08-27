@@ -6,6 +6,9 @@ import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -28,6 +31,7 @@ class LogsActivity : AppCompatActivity() {
     private lateinit var textEmpty: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logs)
 
@@ -44,6 +48,19 @@ class LogsActivity : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.recycler_logs)
         recycler.layoutManager = LinearLayoutManager(this).apply { reverseLayout = true }
         recycler.adapter = adapter
+
+        // Apply dynamic bottom insets for navigation bar awareness
+        val recyclerInitialPadding = recycler.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(recycler) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            recycler.setPadding(
+                recycler.paddingLeft,
+                recycler.paddingTop,
+                recycler.paddingRight,
+                recyclerInitialPadding + bars.bottom
+            )
+            insets
+        }
 
         observeLogs()
     }

@@ -12,6 +12,13 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
+
+        <!-- System bar appearance: light icons on dark backgrounds for dark mode. -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+
         <item name="touchSelectBackground">?android:attr/selectableItemBackground</item>
     </style>
 </resources>

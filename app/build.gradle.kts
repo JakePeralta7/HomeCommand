@@ -34,6 +34,15 @@ android {
         buildConfig = true
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("homecommand.jks")
+            storePassword = "android"
+            keyAlias = "homecommand"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             // R8 shrinking/obfuscation on: Gson 2.11 consumer rules + @SerializedName on all
@@ -42,6 +51,7 @@ android {
                 enable = true
             }
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

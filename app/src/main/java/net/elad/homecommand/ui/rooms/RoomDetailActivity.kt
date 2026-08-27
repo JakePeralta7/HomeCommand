@@ -2,8 +2,13 @@ package net.elad.homecommand.ui.rooms
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -50,6 +55,7 @@ class RoomDetailActivity : AppCompatActivity() {
     private var crumbedRoomName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room_detail)
 
@@ -88,8 +94,31 @@ class RoomDetailActivity : AppCompatActivity() {
             )
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        findViewById<FloatingActionButton>(R.id.fab_add_device_to_room).setOnClickListener {
+        val fab = findViewById<FloatingActionButton>(R.id.fab_add_device_to_room)
+        fab.setOnClickListener {
             showAddDialog()
+        }
+
+        // Apply dynamic bottom insets for navigation bar awareness
+        val recyclerInitialPadding = recyclerView.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            recyclerView.setPadding(
+                recyclerView.paddingLeft,
+                recyclerView.paddingTop,
+                recyclerView.paddingRight,
+                recyclerInitialPadding + bars.bottom
+            )
+            insets
+        }
+
+        // Apply dynamic bottom margin to FAB for navigation bar awareness
+        ViewCompat.setOnApplyWindowInsetsListener(fab) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            fab.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = 16 + bars.bottom
+            }
+            insets
         }
 
         observeRoomsAndDevices()

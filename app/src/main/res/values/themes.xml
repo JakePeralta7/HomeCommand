@@ -12,6 +12,12 @@
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
 
+        <!-- System bar appearance: dark icons on light backgrounds for light mode. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+
         <!-- App-local mirror of a library attr so code can stay on the non-transitive app R. -->
         <item name="touchSelectBackground">?android:attr/selectableItemBackground</item>
     </style>

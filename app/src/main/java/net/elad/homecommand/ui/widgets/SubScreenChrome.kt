@@ -32,8 +32,13 @@ fun AppCompatActivity.installSubScreenChrome(root: View) {
     ViewCompat.setOnApplyWindowInsetsListener(root) { _, insets ->
         val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
         val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-        root.updatePadding(top = rootTop + maxOf(bars.top, cutout.top))
-        WindowInsetsCompat.CONSUMED
+        root.updatePadding(
+            top = rootTop + maxOf(bars.top, cutout.top),
+            bottom = bars.bottom,
+            left = bars.left,
+            right = bars.right
+        )
+        insets
     }
 }
 

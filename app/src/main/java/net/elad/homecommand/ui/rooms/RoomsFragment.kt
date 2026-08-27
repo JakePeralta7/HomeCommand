@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
@@ -81,8 +84,31 @@ class RoomsFragment : Fragment() {
             )
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        view.findViewById<FloatingActionButton>(R.id.fab_add_room).setOnClickListener {
+        val fab = view.findViewById<FloatingActionButton>(R.id.fab_add_room)
+        fab.setOnClickListener {
             showRoomNameDialog(room = null)
+        }
+
+        // Apply dynamic bottom insets for navigation bar awareness
+        val recyclerInitialPadding = recyclerView.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            recyclerView.setPadding(
+                recyclerView.paddingLeft,
+                recyclerView.paddingTop,
+                recyclerView.paddingRight,
+                recyclerInitialPadding + bars.bottom
+            )
+            insets
+        }
+
+        // Apply dynamic bottom margin to FAB for navigation bar awareness
+        ViewCompat.setOnApplyWindowInsetsListener(fab) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            fab.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = 16 + bars.bottom
+            }
+            insets
         }
 
         observeViewModel(view)

@@ -1,8 +1,12 @@
 package net.elad.homecommand.ui.settings
 
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -24,6 +28,7 @@ class GeneralActivity : AppCompatActivity() {
     private lateinit var btnSave: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_general)
         bindViews()
@@ -36,6 +41,20 @@ class GeneralActivity : AppCompatActivity() {
             BreadcrumbBarView.Crumb(getString(R.string.tab_settings)) { finish() },
             BreadcrumbBarView.Crumb(getString(R.string.settings_general)),
         )
+
+        // Apply dynamic bottom insets for navigation bar awareness to ScrollView content
+        val scrollContent = findViewById<LinearLayout>(R.id.scroll_content)
+        val scrollContentInitialPadding = scrollContent.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(scrollContent) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            scrollContent.setPadding(
+                scrollContent.paddingLeft,
+                scrollContent.paddingTop,
+                scrollContent.paddingRight,
+                scrollContentInitialPadding + bars.bottom
+            )
+            insets
+        }
 
         btnSave.setOnClickListener {
             val loaded = viewModel.settings.value ?: return@setOnClickListener
