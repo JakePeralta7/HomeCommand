@@ -56,7 +56,7 @@ class RoomTileAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int): Int = getItem(position).type.ordinal
+    override fun getItemViewType(position: Int): Int = (getItem(position).type?.ordinal ?: DeviceType.CONTACT_SENSOR.ordinal)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

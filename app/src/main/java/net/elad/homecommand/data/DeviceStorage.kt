@@ -66,8 +66,8 @@ object DeviceStorage {
                 .getString(KEY_DEVICES, null)
                 ?.let { json -> gson.fromJson<List<Device>>(json, deviceListType) }
                 .orEmpty()
-                // Legacy guard: entries must at least be subscribable or controllable.
-                .filter { device -> !device.commandTopic.isNullOrBlank() || device.stateTopic != null }
+                // Legacy guard: entries must at least be subscribable or controllable, and have valid type.
+                .filter { device -> device.type != null && (!device.commandTopic.isNullOrBlank() || device.stateTopic != null) }
         }
 
     suspend fun saveRooms(
