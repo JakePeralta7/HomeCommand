@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+    <defs>
+        <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#B24BF3;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#5A189A;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Background circle -->
+    <circle cx="256" cy="256" r="256" fill="url(#purpleGradient)"/>
+
+    <!-- House shape formed by nodes and connections -->
+
+    <!-- Top node (roof peak) -->
+    <circle cx="256" cy="130" r="18" fill="#FFFFFF"/>
+
+    <!-- Left roof node -->
+    <circle cx="180" cy="200" r="18" fill="#FFFFFF"/>
+
+    <!-- Right roof node -->
+    <circle cx="332" cy="200" r="18" fill="#FFFFFF"/>
+
+    <!-- Left wall node -->
+    <circle cx="150" cy="280" r="18" fill="#FFFFFF"/>
+
+    <!-- Right wall node -->
+    <circle cx="362" cy="280" r="18" fill="#FFFFFF"/>
+
+    <!-- Bottom left node -->
+    <circle cx="180" cy="350" r="18" fill="#FFFFFF"/>
+
+    <!-- Bottom right node -->
+    <circle cx="332" cy="350" r="18" fill="#FFFFFF"/>
+
+    <!-- Center node (representing MQTT hub) -->
+    <circle cx="256" cy="260" r="22" fill="#FFFFFF"/>
+
+    <!-- Connection lines forming house structure -->
+
+    <!-- Roof lines -->
+    <line x1="256" y1="130" x2="180" y2="200" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+    <line x1="256" y1="130" x2="332" y2="200" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- Left wall lines -->
+    <line x1="180" y1="200" x2="150" y2="280" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- Right wall lines -->
+    <line x1="332" y1="200" x2="362" y2="280" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- Bottom lines -->
+    <line x1="150" y1="280" x2="180" y2="350" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+    <line x1="362" y1="280" x2="332" y2="350" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- Base line -->
+    <line x1="180" y1="350" x2="332" y2="350" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- Connection to central MQTT hub (representing data flow) -->
+    <line x1="256" y1="130" x2="256" y2="238" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+    <line x1="180" y1="200" x2="234" y2="252" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+    <line x1="332" y1="200" x2="278" y2="252" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+    <line x1="150" y1="280" x2="228" y2="268" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+    <line x1="362" y1="280" x2="284" y2="268" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+</svg>
