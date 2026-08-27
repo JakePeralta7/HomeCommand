@@ -15,9 +15,6 @@ $env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
   `.\gradlew.bat testDebugUnitTest --tests "net.elad.homecommand.mqtt.DeviceStateReaderTest" --console=plain`
 - Test stack is bare JUnit 4 only — no Robolectric, no mocking library. That's why code under
   test must stay free of Android imports.
-- Release builds are R8-minified (`optimization { enable = true }`). After bumping
-  HiveMQ/netty/Gson, install the release APK on a device and confirm an MQTT connect before
-  shipping; the unsigned APK needs `zipalign` + `apksigner` with the debug key first.
 
 Install + smoke-test on device:
 
@@ -80,10 +77,9 @@ $adb = Join-Path ([System.Text.RegularExpressions.Regex]::Unescape($raw)) "platf
   `learned_ir_code`.
 - Rooms live in the same prefs file as devices (`devices_v2`/`rooms` keys); pre-rooms data was
   intentionally dropped — don't reintroduce legacy-key fallbacks.
-- Every Gson-persisted model field (`Device`, `Room`, `MqttSettings`) carries `@SerializedName`
-  with the current JSON key; new persisted fields must too or R8 obfuscation breaks round-trips.
-  `proguard-rules.pro` keeps netty member names (`-keepnames class io.netty.**`) and dontwarns its
-  optional transports — required by R8 full mode, don't prune without a release smoke test.
+- Every Gson-persisted model field (`Device`, `Room`, `MqttSettings`) must carry `@SerializedName`
+  with the current JSON key; new persisted fields must too or deserialization will fail and silently
+  default to null values.
 - Broker password is AES-GCM encrypted via AndroidKeyStore (`CryptoManager`, `enc:v1:` prefix);
   legacy plaintext migrates on next save. The prefs file (`my_automations`) is excluded from
   backups (`backup_rules.xml` / `data_extraction_rules.xml`) because KeyStore keys don't travel —
@@ -100,3 +96,10 @@ $adb = Join-Path ([System.Text.RegularExpressions.Regex]::Unescape($raw)) "platf
   Settings and room edits are sub-screen activities launched via `startActivity()`.
 - `README.md`'s architecture section lags behind the code — trust the code over it.
 - Only commit when the user explicitly asks; leave changes uncommitted otherwise.
+
+## Release & Deployment
+
+- Release builds are deployed to Google Play closed testing only; never install release APK
+  manually via adb. Debug builds (`assembleDebug`/`installDebug`) are for local testing only.
+- After merging to `master`, update the version in `app/build.gradle.kts` (Versions object),
+  build the release bundle with `bundleRelease`, and upload to Play Console.

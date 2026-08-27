@@ -68,8 +68,8 @@ Key decisions:
 - `usesCleartextTraffic` is enabled so plain-TCP brokers on the local network work; prefer TLS
   (`useTls`) when your broker supports it. Saving a non-TLS broker whose host resolves outside
   the local network shows a warning — cleartext beyond the LAN exposes credentials.
-- Release builds are R8-minified with resource shrinking; all persisted model fields carry
-  `@SerializedName` so obfuscation cannot break JSON round-trips.
+- All persisted model fields carry `@SerializedName` to ensure JSON round-trips work correctly
+  during deserialization.
 
 ## Building
 
